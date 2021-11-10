@@ -16,12 +16,10 @@ public class ParkingLotSystem {
      * @return boolean - True if the vehicle is parked
      * else false
      */
-    public boolean park(Object vehicle) {
-        if (this.vehicle == null) {
-            this.vehicle = vehicle;
-            return true;
-        }
-        return false;
+    public void park(Object vehicle) throws ParkingLotException {
+        if (this.vehicle != null)
+            throw new ParkingLotException("Parking Lot is full");
+        this.vehicle = vehicle;
     }
 
     /**
@@ -31,11 +29,29 @@ public class ParkingLotSystem {
      * @return boolean - True if the vehicle is un-parked
      * else false
      */
-    public boolean unPark(Object vehicle) {
-        if (this.vehicle.equals(vehicle)) {
+    public void unPark(Object vehicle) throws ParkingLotException {
+        if (this.vehicle == null)
+            throw new ParkingLotException("There is no vehicle to un-park");
+        if (this.vehicle.equals(vehicle))
             this.vehicle = null;
-            return true;
-        }
-        return false;
+    }
+
+    /**
+     * This method is used to check if the vehicle is parked or not.
+     *
+     * @param vehicle
+     * @return boolean true if vehicle is parked or else false.
+     */
+    public boolean isVehicleParked(Object vehicle) {
+        return this.vehicle.equals(vehicle);
+    }
+
+    /**
+     * This method is used to check if the vehicle is un-parked or not.
+     *
+     * @return boolean true if vehicle is un-parked or else false.
+     */
+    public boolean isVehicleUnParked() {
+        return this.vehicle == null;
     }
 }
