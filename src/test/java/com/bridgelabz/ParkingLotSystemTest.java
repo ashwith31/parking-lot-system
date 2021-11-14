@@ -96,4 +96,12 @@ public class ParkingLotSystemTest {
         boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
         Assertions.assertTrue(isParked);
     }
+
+    @Test
+    public void givenADriverWantsToFindVehicle_ShouldReturnTrue() {
+        parkingLotSystem.setCapacity(2);
+        parkingLotSystem.park(vehicle);
+        Object expectedVehicle = parkingLotSystem.findVehicle(vehicle);
+        Assertions.assertEquals(vehicle, expectedVehicle);
+    }
 }
