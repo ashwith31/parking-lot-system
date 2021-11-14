@@ -11,20 +11,18 @@ import java.util.List;
  ***************************************************************************/
 public class ParkingLotSystem {
     private  int actualCapacity;
-    private List vehicles;
-    private List<ParkingLotObserver> observers;
-    private AirportSecurity security;
+    private static List vehicles;
+    private static List<ParkingLotObserver> observers;
 
-    public ParkingLotSystem(int capacity) {
+    public ParkingLotSystem() {
         this.observers = new ArrayList<>();
         this.vehicles = new ArrayList();
-        this.actualCapacity = capacity;
     }
 
     /**
      * This method is used to register the owner of parking lot.
      *
-     * @param owner - The actual owner of the parking lot.
+     * @param observer - The observer of the parking lot.
      */
     public void registerParkingLotObserver(ParkingLotObserver observer) {
         this.observers.add(observer);
@@ -38,14 +36,13 @@ public class ParkingLotSystem {
      * else false
      */
     public void park(Object vehicle) throws ParkingLotException {
+        if(isVehicleParked(vehicle))
+            throw new ParkingLotException("Vehicle is already parked");
         if (this.vehicles.size() == this.actualCapacity) {
             for (ParkingLotObserver observers: observers) {
                     observers.capacityIsFull();
             }
-            throw new ParkingLotException("Parking Lot is Full");
         }
-        if(isVehicleParked(vehicle))
-            throw new ParkingLotException("Vehicle is already parked");
         this.vehicles.add(vehicle);
     }
 
@@ -56,11 +53,17 @@ public class ParkingLotSystem {
      * @return boolean - True if the vehicle is un-parked
      * else false
      */
-    public void unPark(Object vehicle) throws ParkingLotException {
-        if (this.vehicles == null)
+    public boolean unPark(Object vehicle) throws ParkingLotException {
+        if (vehicle == null)
             throw new ParkingLotException("There is no vehicle to un-park");
-        if (this.vehicles.equals(vehicle))
-            this.vehicles = null;
+        if (this.vehicles.contains(vehicle)){
+            this.vehicles.remove(vehicle);
+            for (ParkingLotObserver observers: observers) {
+                observers.capacityIsAvailable();
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -82,10 +85,9 @@ public class ParkingLotSystem {
      */
     public boolean isVehicleUnParked(Object vehicle) {
         if( this.vehicles.contains(vehicle)) {
-            vehicle = null;
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
