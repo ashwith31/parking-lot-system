@@ -3,6 +3,8 @@ package com.bridgelabz;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDateTime;
+
 
 public class ParkingLotSystemTest {
     Object vehicle;
@@ -27,6 +29,7 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
+        parkingLotSystem.setCapacity(1);
         parkingLotSystem.park(vehicle);
         parkingLotSystem.unPark(vehicle);
         boolean isUnParked = parkingLotSystem.isVehicleUnParked(vehicle);
@@ -35,8 +38,17 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenAVehicle_WhenAlreadyParked_ShouldThrowException() {
+        parkingLotSystem.setCapacity(1);
         parkingLotSystem.park(vehicle);
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle));
+    }
+
+    @Test
+    public void givenAVehicle_WhenLotIsFullParked_ShouldThrowException() {
+        Object vehicle2 = new Object();
+        parkingLotSystem.setCapacity(1);
+        parkingLotSystem.park(vehicle);
+        Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle2));
     }
 
     @Test
@@ -45,11 +57,12 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    void givenWhenParkingLotIsFull_ShouldInformTheOwner() {
+    void givenWhenParkingLotIsFull_ShouldInformTheOwner() throws ParkingLotException {
         ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.setCapacity(1);
         parkingLotSystem.registerParkingLotObserver(owner);
         parkingLotSystem.park(vehicle);
-        parkingLotSystem.park(new Object());
+        Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(new Object()));
         boolean capacityFull = owner.isCapacityFull();
         Assertions.assertTrue(capacityFull);
     }
@@ -68,23 +81,15 @@ public class ParkingLotSystemTest {
     @Test
     void givenWhenParkingLotIsFull_ShouldInformTheSecurity() {
         ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.setCapacity(1);
         parkingLotSystem.registerParkingLotObserver(owner);
         AirportSecurity airportSecurity = new AirportSecurity();
         parkingLotSystem.registerParkingLotObserver(airportSecurity);
         parkingLotSystem.park(vehicle);
-        parkingLotSystem.park(new Object());
-        boolean capacityFull = airportSecurity.isCapacityFull();
-        Assertions.assertTrue(capacityFull);
-    }
+        //Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle));
 
-    @Test
-    void givenWhenParkingLotSpaceIsAvailableAfterFull_ShouldReturnTrue() {
-        Object vehicle2 = new Object();
-        ParkingLotOwner owner = new ParkingLotOwner();
-        parkingLotSystem.registerParkingLotObserver(owner);
-        parkingLotSystem.park(vehicle);
-        parkingLotSystem.park(vehicle2);
-        boolean capacityFull = owner.isCapacityFull();
+        Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(new Object()));
+        boolean capacityFull = airportSecurity.isCapacityFull();
         Assertions.assertTrue(capacityFull);
     }
 
@@ -98,10 +103,18 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    public void givenADriverWantsToFindVehicle_ShouldReturnTrue() {
+    public void givenADriver_WhenWantsToFindVehicle_ShouldReturnTrue() {
+        ParkingLotDriver parkingLotDriver = new ParkingLotDriver();
         parkingLotSystem.setCapacity(2);
         parkingLotSystem.park(vehicle);
-        Object expectedVehicle = parkingLotSystem.findVehicle(vehicle);
+        Object expectedVehicle = parkingLotDriver.searchVehicle(vehicle);
         Assertions.assertEquals(vehicle, expectedVehicle);
+    }
+
+    @Test
+    public void givenAVehicle_WhenParkedWithTimeAndDate_ShouldReturnTrue() {
+        parkingLotSystem.setCapacity(2);
+        parkingLotSystem.park(vehicle);
+       Assertions.assertEquals(LocalDateTime.now(), ParkingLotOwner.parkedTimeOfVehicle(vehicle));
     }
 }

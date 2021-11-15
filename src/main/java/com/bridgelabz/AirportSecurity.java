@@ -1,5 +1,8 @@
 package com.bridgelabz;
 
+/********************************************************************
+ * Purpose: A class for Airport Security of the parking lot.
+ ********************************************************************/
 public class AirportSecurity implements ParkingLotObserver {
     private boolean isFullCapacity;
 
@@ -11,6 +14,9 @@ public class AirportSecurity implements ParkingLotObserver {
         isFullCapacity = true;
     }
 
+    /**
+     * This method is to find if the capacity is available in the parking lot.
+     */
     @Override
     public void capacityIsAvailable() {
         isFullCapacity = false;
