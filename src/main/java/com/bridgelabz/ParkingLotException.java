@@ -1,5 +1,4 @@
 package com.bridgelabz;
-
 /*******************************************************************************************
  * Purpose: A custom exception class to handle exceptions in the program.
  *

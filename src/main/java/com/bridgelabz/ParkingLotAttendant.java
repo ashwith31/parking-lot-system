@@ -14,7 +14,7 @@ public class ParkingLotAttendant {
      *
      * @param vehicle - the vehicle to be parked.
      */
-    public void parkVehicleByAttendant(Object vehicle) {
+    public void parkVehicleByAttendant(Vehicle vehicle) {
         parkingLotSystem.park(vehicle);
     }
 }

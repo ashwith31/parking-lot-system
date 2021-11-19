@@ -16,7 +16,7 @@ public class ParkingLotDriver {
      * @param vehicle to be searched
      * @return object - the resultant vehicle after searching.
      */
-    public Object searchVehicle(Object vehicle){
+    public Object searchVehicle(Vehicle vehicle){
         return parkingLotSystem.findVehicle(vehicle);
     }
 }

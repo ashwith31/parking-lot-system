@@ -2,6 +2,9 @@ package com.bridgelabz;
 
 /********************************************************************
  * Purpose: A class for Airport Security of the parking lot.
+ *
+ * @author Ashwith
+ * @since 14/11/21
  ********************************************************************/
 public class AirportSecurity implements ParkingLotObserver {
     private boolean isFullCapacity;
