@@ -183,14 +183,14 @@ public class ParkingLotSystemTest {
     }
 
     @Test
-    void givenBlue() {
+    void givenPoliceDepartment_WhenSearchForBlueToyotaVehicles_ShouldReturnTrue() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
+        vehicle = new Vehicle("Toyota", "5647", "Blue", "Naresh");
         Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Blue", "Naresh");
+        Vehicle vehicle3 = new Vehicle("Toyota", "2353", "Blue", "Naresh");
         Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Blue", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Toyota", "2355", "Blue", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -205,5 +205,60 @@ public class ParkingLotSystemTest {
                 vehicle5.getNumberPlate() + " Location = ParkingLot 1: " + 2);
         List actualList = policeDepartment.getBlueToyotaVehicles();
         Assertions.assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    void givenPoliceDepartment_WhenThereAreNoBlueToyotaVehicles_ShouldThrowException() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        Assertions.assertThrows(ParkingLotException.class, () -> policeDepartment.getBlueToyotaVehicles());
+    }
+
+    @Test
+    void givenPoliceDepartment_WhenBMWVehicles_ShouldReturnTrue() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle("BMW", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
+        Vehicle vehicle3 = new Vehicle("BMW", "2353", "Blue", "Naresh");
+        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Toyota", "2355", "Blue", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        ArrayList expectedList = new ArrayList();
+        expectedList.add(vehicle);
+        expectedList.add(vehicle3);
+        List actualList = policeDepartment.getAllBMWVehicles();
+        Assertions.assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    void givenPoliceDepartment_WhenThereAreNoBMWVehicles_ShouldThrowException() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        Assertions.assertThrows(ParkingLotException.class, () -> policeDepartment.getAllBMWVehicles());
     }
 }

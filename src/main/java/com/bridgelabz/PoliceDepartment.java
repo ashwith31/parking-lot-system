@@ -10,7 +10,11 @@ public class PoliceDepartment {
         return parkingLotSystem.getWhiteColorVehiclePosition();
     }
 
-    public List getBlueToyotaVehicles(){
+    public List getBlueToyotaVehicles() throws ParkingLotException{
         return parkingLotSystem.getBlueToyotaVehicles();
+    }
+
+    public List getAllBMWVehicles() throws ParkingLotException{
+        return parkingLotSystem.getBMWVehicles();
     }
 }
