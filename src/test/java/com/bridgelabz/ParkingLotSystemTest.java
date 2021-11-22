@@ -165,21 +165,45 @@ public class ParkingLotSystemTest {
         Assertions.assertEquals(actualList, expectedList);
     }
 
-//    @Test
-//    void givenBlue() {
-//        PoliceDepartment policeDepartment = new PoliceDepartment();
-//        parkingLotSystem.setCapacityOfParkingLot(10);
-//        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
-//        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
-//        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Blue", "Naresh");
-//        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
-//        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Blue", "Naresh");
-//        parkingLotSystem.park(vehicle);
-//        parkingLotSystem.park(vehicle2);
-//        parkingLotSystem.park(vehicle3);
-//        parkingLotSystem.park(vehicle4);
-//        parkingLotSystem.park(vehicle5);
-//        List expectedMap = parkingLotSystem.getBlueToyotaVehicles();
-//        System.out.println(expectedMap);
-//    }
+    @Test
+    void givenPoliceDepartment_WhenThereAreNoWhiteVehicles_ShouldThrowException() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle("Mercedes", "5647", "Yellow", "Naresh");
+        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        Assertions.assertThrows(ParkingLotException.class, () -> policeDepartment.getAllWhiteVehicles());
+    }
+
+    @Test
+    void givenBlue() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
+        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Blue", "Naresh");
+        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
+        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Blue", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        ArrayList expectedList = new ArrayList();
+        expectedList.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
+                vehicle.getNumberPlate() + " Location = ParkingLot 1: " + 0);
+        expectedList.add("Name of Parking Attendant = " + vehicle3.getParkingAttendantName() + " Plate Number = " +
+                vehicle3.getNumberPlate() + " Location = ParkingLot 1: " + 1);
+        expectedList.add("Name of Parking Attendant = " + vehicle5.getParkingAttendantName() + " Plate Number = " +
+                vehicle5.getNumberPlate() + " Location = ParkingLot 1: " + 2);
+        List actualList = policeDepartment.getBlueToyotaVehicles();
+        Assertions.assertEquals(expectedList, actualList);
+    }
 }

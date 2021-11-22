@@ -168,29 +168,29 @@ public class ParkingLotSystem {
             if (isVehicleParked(vehicle) && vehicle.getColor().equals("White"))
                 temp.add("ParkingLot2: "+ parkingLot2.indexOf(vehicle));
         }
-        if(temp == null)
+        if(temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
                     "No White Color Vehicle Found");
         return temp;
     }
 
-//    public List getBlueToyotaVehicles() throws ParkingLotException {
-//        ArrayList temp = new ArrayList();
-//        for (Vehicle vehicle : parkingLot1) {
-//            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
-//                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
-//                        vehicle.getNumberPlate() + " Location = ParkingLot 1: " + parkingLot1.indexOf(vehicle));
-//            }
-//        }
-//        for (Vehicle vehicle : parkingLot2) {
-//            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
-//                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
-//                        vehicle.getNumberPlate() + " Location = ParkingLot 2: " + parkingLot2.indexOf(vehicle));
-//            }
-//        }
-//        if(temp == null)
-//            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
-//                    "No Blue Toyota Vehicle Found");
-//        return temp;
-//    }
+    public List getBlueToyotaVehicles() throws ParkingLotException {
+        ArrayList temp = new ArrayList();
+        for (Vehicle vehicle : parkingLot1) {
+            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
+                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
+                        vehicle.getNumberPlate() + " Location = ParkingLot 1: " + parkingLot1.indexOf(vehicle));
+            }
+        }
+        for (Vehicle vehicle : parkingLot2) {
+            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
+                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
+                        vehicle.getNumberPlate() + " Location = ParkingLot 2: " + parkingLot2.indexOf(vehicle));
+            }
+        }
+        if(temp == null)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No Blue Toyota Vehicle Found");
+        return temp;
+    }
 }
