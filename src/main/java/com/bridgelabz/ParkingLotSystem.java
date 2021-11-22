@@ -1,7 +1,6 @@
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /***************************************************************************
  * Purpose: This class has all the operations of the Parking Lot.
@@ -24,6 +23,15 @@ public class ParkingLotSystem {
     }
 
     /**
+     * This method is used to set the capacity of the parking lot.
+     *
+     * @param capacity - size of the parking lot.
+     */
+    public void setCapacityOfParkingLot(int capacity) {
+        actualCapacity = capacity;
+    }
+
+    /**
      * This method is used to register the observers of parking lot.
      *
      * @param observer - The observer of the parking lot.
@@ -43,14 +51,14 @@ public class ParkingLotSystem {
         if (isVehicleParked(vehicle))
             throw new ParkingLotException
                     (ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED, "Vehicle is already parked");
-        if (this.parkingLot1.size() <= this.actualCapacity && this.parkingLot2.size() <= this.actualCapacity) {
+        if (parkingLot1.size() <= actualCapacity && parkingLot2.size() <= actualCapacity) {
             if (parkingLot1.size() > parkingLot2.size()) {
-                this.parkingLot2.add(vehicle);
+                parkingLot2.add(vehicle);
             } else {
-                this.parkingLot1.add(vehicle);
+                parkingLot1.add(vehicle);
             }
         }
-        if (this.parkingLot1.size() == this.actualCapacity && this.parkingLot2.size() == this.actualCapacity) {
+        if (parkingLot1.size() == actualCapacity && parkingLot2.size() == actualCapacity) {
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsFull();
             }
@@ -71,7 +79,7 @@ public class ParkingLotSystem {
     public boolean unPark(Vehicle vehicle) throws ParkingLotException {
         for (Vehicle vehicle1 : parkingLot1) {
             if (vehicle1.equals(vehicle)) {
-                this.parkingLot1.remove(vehicle);
+                parkingLot1.remove(vehicle);
                 for (ParkingLotObserver observer : observers) {
                     observer.capacityIsAvailable();
                 }
@@ -80,7 +88,7 @@ public class ParkingLotSystem {
         }
         for (Vehicle vehicle1 : parkingLot2) {
             if (vehicle1.equals(vehicle)) {
-                this.parkingLot2.remove(vehicle);
+                parkingLot2.remove(vehicle);
                 for (ParkingLotObserver observer : observers) {
                     observer.capacityIsAvailable();
                 }
@@ -136,7 +144,7 @@ public class ParkingLotSystem {
      * @param vehicle object to find.
      * @return object of vehicle if present.
      * @throws ParkingLotException if there is no such vehicle as passed in
-     *                             the parameter in the parking lot.
+     *                             the parameter in the parking lots.
      */
     public Vehicle findVehicle(Vehicle vehicle) throws ParkingLotException {
         for (Vehicle vehicle1 : parkingLot1) {
@@ -148,15 +156,41 @@ public class ParkingLotSystem {
                 return vehicle1;
         }
         throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND, "No Such Vehicle Found");
-
     }
 
-    /**
-     * This method is used to set the capacity of the parking lot.
-     *
-     * @param capacity - size of the parking lot.
-     */
-    public void setCapacityOfParkingLot(int capacity) {
-        actualCapacity = capacity;
+    public List getWhiteColorVehiclePosition() throws ParkingLotException {
+        ArrayList temp = new ArrayList();
+        for (Vehicle vehicle : parkingLot1) {
+            if (isVehicleParked(vehicle) && vehicle.getColor().equals("White"))
+                temp.add("ParkingLot1: "+ parkingLot1.indexOf(vehicle));
+        }
+        for (Vehicle vehicle : parkingLot2) {
+            if (isVehicleParked(vehicle) && vehicle.getColor().equals("White"))
+                temp.add("ParkingLot2: "+ parkingLot2.indexOf(vehicle));
+        }
+        if(temp == null)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No White Color Vehicle Found");
+        return temp;
     }
+
+//    public List getBlueToyotaVehicles() throws ParkingLotException {
+//        ArrayList temp = new ArrayList();
+//        for (Vehicle vehicle : parkingLot1) {
+//            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
+//                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
+//                        vehicle.getNumberPlate() + " Location = ParkingLot 1: " + parkingLot1.indexOf(vehicle));
+//            }
+//        }
+//        for (Vehicle vehicle : parkingLot2) {
+//            if (isVehicleParked(vehicle) && vehicle.getColor().equals("Blue")) {
+//                temp.add("Name of Parking Attendant = " + vehicle.getParkingAttendantName() + " Plate Number = " +
+//                        vehicle.getNumberPlate() + " Location = ParkingLot 2: " + parkingLot2.indexOf(vehicle));
+//            }
+//        }
+//        if(temp == null)
+//            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+//                    "No Blue Toyota Vehicle Found");
+//        return temp;
+//    }
 }
