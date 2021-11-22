@@ -19,7 +19,8 @@ public class ParkingLotSystemTest {
 
     @Test
     void givenAVehicle_WhenParked_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.park(vehicle);
         boolean isParked = parkingLotSystem.isVehicleParked(vehicle);
@@ -28,7 +29,8 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenAVehicle_WhenUnParked_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.park(vehicle);
         parkingLotSystem.unPark(vehicle);
@@ -38,7 +40,8 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenAVehicle_WhenAlreadyParked_ShouldThrowException() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(2);
         parkingLotSystem.park(vehicle);
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle));
@@ -46,8 +49,10 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenAVehicle_WhenLotIsFullParked_ShouldThrowException() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.park(vehicle);
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle2));
@@ -60,8 +65,10 @@ public class ParkingLotSystemTest {
 
     @Test
     void givenWhenParkingLotIsFull_ShouldInformTheOwner() throws ParkingLotException {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         ParkingLotOwner owner = new ParkingLotOwner();
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.registerParkingLotObserver(owner);
@@ -73,8 +80,10 @@ public class ParkingLotSystemTest {
 
     @Test
     void givenCapacityIs1_ShouldBeAbleToPark2Vehicles() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.park(vehicle);
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle2));
@@ -85,8 +94,10 @@ public class ParkingLotSystemTest {
 
     @Test
     void givenWhenParkingLotIsFull_ShouldInformTheSecurity() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         AirportSecurity airportSecurity = new AirportSecurity();
         parkingLotSystem.registerParkingLotObserver(airportSecurity);
@@ -98,10 +109,12 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenWhenParkingLotSpaceIsAvailableAfterFull_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(2);
         ParkingLotOwner owner = new ParkingLotOwner();
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         parkingLotSystem.registerParkingLotObserver(owner);
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
@@ -112,7 +125,8 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenToParkVehicleByAttendant_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         ParkingLotAttendant parkingLotAttendant = new ParkingLotAttendant();
         parkingLotAttendant.parkVehicleByAttendant(vehicle);
@@ -122,7 +136,8 @@ public class ParkingLotSystemTest {
 
     @Test
     public void givenADriver_WhenWantsToFindVehicle_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
         ParkingLotDriver parkingLotDriver = new ParkingLotDriver();
         parkingLotSystem.setCapacityOfParkingLot(2);
         parkingLotSystem.park(vehicle);
@@ -132,8 +147,10 @@ public class ParkingLotSystemTest {
 
     @Test
     void givenVehicles_WhenEvenlyParked_ShouldReturnTrue() {
-        vehicle = new Vehicle("Mercedes", "5647", "Black", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2356", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Black", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2356", "White", "Naresh");
         parkingLotSystem.setCapacityOfParkingLot(1);
         parkingLotSystem.park(vehicle);
         Assertions.assertThrows(ParkingLotException.class, () -> parkingLotSystem.park(vehicle2));
@@ -146,11 +163,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenSearchForWhiteVehicles_ShouldReturnTrue() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Mercedes", "5647", "White", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "White", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "White", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "White", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "White", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2355", "White", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -169,11 +191,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenThereAreNoWhiteVehicles_ShouldThrowException() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Mercedes", "5647", "Yellow", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Yellow", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2355", "Orange", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -186,11 +213,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenSearchForBlueToyotaVehicles_ShouldReturnTrue() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Toyota", "5647", "Blue", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Toyota", "2353", "Blue", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Toyota", "2355", "Blue", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Toyota", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "White", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Toyota", "2353", "Blue", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "White", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Toyota", "2355", "Blue", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -211,11 +243,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenThereAreNoBlueToyotaVehicles_ShouldThrowException() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2355", "Orange", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -228,11 +265,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenBMWVehicles_ShouldReturnTrue() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("BMW", "5647", "Blue", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "White", "Naresh");
-        Vehicle vehicle3 = new Vehicle("BMW", "2353", "Blue", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "White", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Toyota", "2355", "Blue", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "BMW", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "White", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "BMW", "2353", "Blue", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "White", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Toyota", "2355", "Blue", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);
@@ -249,11 +291,16 @@ public class ParkingLotSystemTest {
     void givenPoliceDepartment_WhenThereAreNoBMWVehicles_ShouldThrowException() {
         PoliceDepartment policeDepartment = new PoliceDepartment();
         parkingLotSystem.setCapacityOfParkingLot(10);
-        vehicle = new Vehicle("Mercedes", "5647", "Blue", "Naresh");
-        Vehicle vehicle2 = new Vehicle("Nissan", "2352", "Green", "Naresh");
-        Vehicle vehicle3 = new Vehicle("Nissan", "2353", "Violet", "Naresh");
-        Vehicle vehicle4 = new Vehicle("Nissan", "2354", "Black", "Naresh");
-        Vehicle vehicle5 = new Vehicle("Nissan", "2355", "Orange", "Naresh");
+        vehicle = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Mercedes", "5647", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2352", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2353", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2354", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM,
+                "Nissan", "2355", "Orange", "Naresh");
         parkingLotSystem.park(vehicle);
         parkingLotSystem.park(vehicle2);
         parkingLotSystem.park(vehicle3);

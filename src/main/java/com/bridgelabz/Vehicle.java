@@ -11,6 +11,11 @@ public class Vehicle {
     private final String numberPlate;
     private final String color;
     private final String parkingAttendantName;
+    private final VehicleType vehicleType;
+
+    enum VehicleType{
+        SMALL, MEDIUM, LARGE;
+    }
 
     public String getName() {
         return name;
@@ -29,10 +34,11 @@ public class Vehicle {
     }
 
     //constructor to initialize variables.
-    public Vehicle(String name, String numberPlate, String color, String parkingAttendantName) {
+    public Vehicle(VehicleType type, String name, String numberPlate, String color, String parkingAttendantName) {
         this.name = name;
         this.numberPlate = numberPlate;
         this.color = color;
         this.parkingAttendantName = parkingAttendantName;
+        this.vehicleType = type;
     }
 }
