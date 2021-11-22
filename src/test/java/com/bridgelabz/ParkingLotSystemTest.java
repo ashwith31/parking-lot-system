@@ -345,4 +345,31 @@ public class ParkingLotSystemTest {
         List actualList = policeDepartment.getAllHandicappedVehicles();
         Assertions.assertEquals(expectedList, actualList);
     }
+
+    @Test
+    void givenPoliceDepartment_WheSearchForHandicapVehicles_ShouldThrowException() {
+        PoliceDepartment policeDepartment = new PoliceDepartment();
+        parkingLotSystem.setCapacityOfParkingLot(10);
+        vehicle = new Vehicle(Vehicle.VehicleType.SMALL, Vehicle.PersonType.HANDICAP,
+                "Honda", "TS10ML10", "Blue", "Naresh");
+        Vehicle vehicle2 = new Vehicle(Vehicle.VehicleType.MEDIUM, Vehicle.PersonType.NORMAL,
+                "Nissan", "TS10L10", "Green", "Naresh");
+        Vehicle vehicle3 = new Vehicle(Vehicle.VehicleType.MEDIUM, Vehicle.PersonType.NORMAL,
+                "Nissan", "T10ML10", "Violet", "Naresh");
+        Vehicle vehicle4 = new Vehicle(Vehicle.VehicleType.SMALL, Vehicle.PersonType.NORMAL,
+                "Yamaha", "TS10ML10000", "Black", "Naresh");
+        Vehicle vehicle5 = new Vehicle(Vehicle.VehicleType.MEDIUM, Vehicle.PersonType.NORMAL,
+                "Nissan", "TS10ML1045", "Orange", "Naresh");
+        parkingLotSystem.park(vehicle);
+        parkingLotSystem.park(vehicle2);
+        parkingLotSystem.park(vehicle3);
+        parkingLotSystem.park(vehicle4);
+        parkingLotSystem.park(vehicle5);
+        List expectedList = new ArrayList();
+        expectedList.add(vehicle2);
+        expectedList.add(vehicle4);
+        expectedList.add(vehicle3);
+        List actualList = policeDepartment.vehicleNumberValidate();
+        Assertions.assertEquals(expectedList, actualList);
+    }
 }

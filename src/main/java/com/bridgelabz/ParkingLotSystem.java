@@ -286,4 +286,21 @@ public class ParkingLotSystem {
                     "No Vehicles Found");
         return temp;
     }
+
+    public List getAllVehicles(){
+        ArrayList temp = new ArrayList();
+        for (Vehicle vehicle : parkingLotForHandicapped) {
+                temp.add(vehicle);
+        }
+        for (Vehicle vehicle : parkingLot1) {
+                temp.add(vehicle);
+        }
+        for (Vehicle vehicle : parkingLot2) {
+                temp.add(vehicle);
+        }
+        if(temp.size() == 0)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No Vehicles Present");
+        return temp;
+    }
 }

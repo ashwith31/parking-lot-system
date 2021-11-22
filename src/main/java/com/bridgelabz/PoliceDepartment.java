@@ -1,6 +1,9 @@
 package com.bridgelabz;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PoliceDepartment {
 
@@ -41,5 +44,21 @@ public class PoliceDepartment {
 
     public List getAllHandicappedVehicles(){
         return parkingLotSystem.getHandicappedVehicles();
+    }
+
+    public List vehicleNumberValidate(){
+        List<Vehicle> parkedVehicles = new ArrayList();
+        List<Vehicle> temp = new ArrayList();
+        Pattern pattern = Pattern.compile("^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{2,4}$");
+        parkedVehicles = parkingLotSystem.getAllVehicles();
+        for(Vehicle vehicle : parkedVehicles){
+            Matcher matcher = pattern.matcher(vehicle.getNumberPlate());
+            if(matcher.matches() == false)
+                temp.add(vehicle);
+        }
+        if(temp.size() == 0)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No Invalid Vehicles Present");
+        return temp;
     }
 }
