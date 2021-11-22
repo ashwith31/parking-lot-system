@@ -274,4 +274,16 @@ public class ParkingLotSystem {
                     "No BMW Vehicles Found");
         return temp;
     }
+
+    public List getHandicappedVehicles(){
+        ArrayList temp = new ArrayList();
+        for (Vehicle vehicle : parkingLotForHandicapped) {
+            if (vehicle.getVehicleType() == Vehicle.VehicleType.SMALL)
+                temp.add(vehicle);
+        }
+        if(temp.size() == 0)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No Vehicles Found");
+        return temp;
+    }
 }

@@ -14,6 +14,10 @@ public class Vehicle {
     private final VehicleType vehicleType;
     private final PersonType personType;
 
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
     enum PersonType{
         NORMAL, HANDICAP;
     }

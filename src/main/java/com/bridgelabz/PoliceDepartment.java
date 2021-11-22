@@ -38,4 +38,8 @@ public class PoliceDepartment {
     public List getAllBMWVehicles() throws ParkingLotException{
         return parkingLotSystem.getBMWVehicles();
     }
+
+    public List getAllHandicappedVehicles(){
+        return parkingLotSystem.getHandicappedVehicles();
+    }
 }
