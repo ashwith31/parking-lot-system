@@ -37,16 +37,4 @@ public class ParkingLotOwner implements ParkingLotObserver {
     public boolean isCapacityFull() {
         return this.isFullCapacity;
     }
-
-    /**
-     * Purpose: For storing Time of vehicle when vehicle is parked.
-     *
-     * @param vehicle object for mapping time and date.
-     * @return LocalDateTime of the parked vehicle
-     */
-    public static LocalDateTime parkedTimeOfVehicle(Object vehicle) {
-        LocalDateTime now = LocalDateTime.now();
-        localDateTimeMap.put(vehicle, now);
-        return now;
-    }
 }

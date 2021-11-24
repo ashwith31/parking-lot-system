@@ -1,6 +1,8 @@
 package com.bridgelabz;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /***************************************************************************
  * Purpose: This class has all the operations of the Parking Lot.
@@ -54,17 +56,17 @@ public class ParkingLotSystem {
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_ALREADY_PARKED,
                     "Vehicle is already parked");
         if (parkingLot1.size() <= actualCapacity && parkingLot2.size() <= actualCapacity
-                && parkingLotForHandicapped.size() <= actualCapacity) {
-            if(vehicle.getPersonType() == Vehicle.PersonType.HANDICAP) {
+                || parkingLotForHandicapped.size() <= actualCapacity) {
+            if (vehicle.getPersonType() == Vehicle.PersonType.HANDICAP) {
                 parkingLotForHandicapped.add(vehicle);
-            }
-           else if (parkingLot1.size() > parkingLot2.size()) {
+            } else if (parkingLot1.size() > parkingLot2.size()) {
                 parkingLot2.add(vehicle);
             } else {
                 parkingLot1.add(vehicle);
             }
         }
-        if (parkingLot1.size() == actualCapacity && parkingLot2.size() == actualCapacity) {
+        if (parkingLot1.size() == actualCapacity && parkingLot2.size() == actualCapacity
+                                || parkingLotForHandicapped.size() == actualCapacity) {
             for (ParkingLotObserver observers : observers) {
                 observers.capacityIsFull();
             }
@@ -189,23 +191,23 @@ public class ParkingLotSystem {
      *
      * @return List of white vehicles.
      * @throws ParkingLotException when there are no white vehicles present in
-     * the parking lots.
+     *                             the parking lots.
      */
     public List getWhiteColorVehiclePosition() throws ParkingLotException {
         ArrayList temp = new ArrayList();
         for (Vehicle vehicle : parkingLot1) {
             if (vehicle.getColor().equals("White"))
-                temp.add("ParkingLot1: "+ parkingLot1.indexOf(vehicle));
+                temp.add("ParkingLot1: " + parkingLot1.indexOf(vehicle));
         }
         for (Vehicle vehicle : parkingLot2) {
             if (vehicle.getColor().equals("White"))
-                temp.add("ParkingLot2: "+ parkingLot2.indexOf(vehicle));
+                temp.add("ParkingLot2: " + parkingLot2.indexOf(vehicle));
         }
         for (Vehicle vehicle : parkingLotForHandicapped) {
             if (vehicle.getColor().equals("White"))
-                temp.add("HandicapParkingLot: "+ parkingLot2.indexOf(vehicle));
+                temp.add("HandicapParkingLot: " + parkingLot2.indexOf(vehicle));
         }
-        if(temp.size() == 0)
+        if (temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
                     "No White Color Vehicle Found");
         return temp;
@@ -216,7 +218,7 @@ public class ParkingLotSystem {
      *
      * @return List of Blue Toyota vehicles.
      * @throws ParkingLotException when there are no Blue Toyota vehicles present in
-     * the parking lots.
+     *                             the parking lots.
      */
     public List getBlueToyotaVehicles() throws ParkingLotException {
         ArrayList temp = new ArrayList();
@@ -239,7 +241,7 @@ public class ParkingLotSystem {
                         parkingLotForHandicapped.indexOf(vehicle));
             }
         }
-        if(temp.size() == 0)
+        if (temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
                     "No Blue Toyota Vehicle Found");
         return temp;
@@ -250,57 +252,99 @@ public class ParkingLotSystem {
      *
      * @return List of BMW vehicles.
      * @throws ParkingLotException when there are no BMW vehicles present in
-     * the parking lots.
+     *                             the parking lots.
      */
     public List getBMWVehicles() throws ParkingLotException {
         ArrayList temp = new ArrayList();
         for (Vehicle vehicle : parkingLot1) {
-            if (vehicle.getName().equals("BMW")) {
+            if (vehicle.getName().equals("BMW"))
                 temp.add(vehicle);
-            }
         }
         for (Vehicle vehicle : parkingLot2) {
-            if (vehicle.getName().equals("BMW")) {
+            if (vehicle.getName().equals("BMW"))
                 temp.add(vehicle);
-            }
         }
         for (Vehicle vehicle : parkingLotForHandicapped) {
-            if (vehicle.getName().equals("BMW")) {
+            if (vehicle.getName().equals("BMW"))
                 temp.add(vehicle);
-            }
         }
-        if(temp.size() == 0)
+        if (temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
                     "No BMW Vehicles Found");
         return temp;
     }
 
-    public List getHandicappedVehicles(){
+    /**
+     * This method is to find all the vehicles of handicapped persons
+     * that are present in the parking lots.
+     *
+     * @return List of vehicles of handicapped persons.
+     * @throws ParkingLotException when there are no vehicles of
+     *                             handicapped persons present in the parking lots.
+     */
+    public List getHandicappedVehicles() {
         ArrayList temp = new ArrayList();
         for (Vehicle vehicle : parkingLotForHandicapped) {
             if (vehicle.getVehicleType() == Vehicle.VehicleType.SMALL)
                 temp.add(vehicle);
         }
-        if(temp.size() == 0)
+        if (temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
                     "No Vehicles Found");
         return temp;
     }
 
-    public List getAllVehicles(){
+    /**
+     * This method is to return all the vehicles that are parked in the
+     * parking lots.
+     *
+     * @return List of all vehicles parked in parking lots.
+     * @throws ParkingLotException if there are no vehicles present in the
+     *                             parking lots.
+     */
+    public List getAllVehicles() {
         ArrayList temp = new ArrayList();
         for (Vehicle vehicle : parkingLotForHandicapped) {
+            temp.add(vehicle);
+        }
+        for (Vehicle vehicle : parkingLot1) {
+            temp.add(vehicle);
+        }
+        for (Vehicle vehicle : parkingLot2) {
+            temp.add(vehicle);
+        }
+        if (temp.size() == 0)
+            throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
+                    "No Vehicles Present");
+        return temp;
+    }
+
+    /**
+     * This method is to get all the vehicles that are parked
+     * before 30 minutes.
+     *
+     * @return List of vehicles that are parked before 30 minutes
+     * @throws ParkingLotException if there are no vehicles that are parked before
+     *                             30 minutes.
+     */
+    public List getVehiclesParkedBefore30Minutes() {
+        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(30);
+        ArrayList temp = new ArrayList();
+        for (Vehicle vehicle : parkingLotForHandicapped) {
+            if (vehicle.getDateTime().compareTo(localDateTime) <= 0)
                 temp.add(vehicle);
         }
         for (Vehicle vehicle : parkingLot1) {
+            if (vehicle.getDateTime().compareTo(localDateTime) <= 0)
                 temp.add(vehicle);
         }
         for (Vehicle vehicle : parkingLot2) {
+            if (vehicle.getDateTime().compareTo(localDateTime) <= 0)
                 temp.add(vehicle);
         }
-        if(temp.size() == 0)
+        if (temp.size() == 0)
             throw new ParkingLotException(ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND,
-                    "No Vehicles Present");
+                    "No vehicles found");
         return temp;
     }
 }
